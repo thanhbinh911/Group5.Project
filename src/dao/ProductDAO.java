@@ -1,34 +1,39 @@
 package dao;
 
-import java.util.ArrayList;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
-import model.User;
 import database.JDBCUtil;
+import model.Product;
 
-public class UserDAO implements DAOInterface<User>{
-
-	public static UserDAO getInstance() {
-		return new UserDAO();
+public class ProductDAO implements DAOInterface<Product> {
+	
+	public static ProductDAO getInstance() {
+		return new ProductDAO();
 	}
 
 	@Override
-	public int add(User t) {
+	public int add(Product t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "INSERT INTO users (id, username, password, role)"+
+			String sql = "INSERT INTO products (id, product_name, price, product_status, quantity, category, product_description, created_at, updated_at)"+
 						" VALUE ("+
-						t.getId()+" , '"+
-						t.getUsername()+"' , '"+
-						t.getPassword()+"' , '"+ 
-						t.getRole()+"')";
+						t.getId() +" , '"+
+						t.getProduct_name() +"' , "+
+						t.getPrice() +" , '"+
+						t.getProduct_status() +"' , "+ 
+						t.getQuantity() +" , '"+
+						t.getCategory() +"' , '"+ 
+						t.getProduct_description() +"' , '"+ 
+						"sysdate() , " +
+						"sysdate()" +")";
 			int result = st.executeUpdate(sql);
 			//Print
 			System.out.println("Executed: "+ sql);
@@ -45,18 +50,22 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public int update(User t) {
+	public int update(Product t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "UPDATE users "+
+			String sql = "UPDATE products "+
 						" SET " +
-						" username ='" + t.getUsername()+"'"+
-						" , password ='" + t.getPassword()+"'"+
-						" , role ='" + t.getRole()+"'"+
+						" product_name ='" + t.getProduct_name()+"'"+
+						" , price =" + t.getPrice()+""+
+						" , product_status ='" + t.getProduct_status()+"'"+
+						" , quantity =" + t.getQuantity()+""+
+						" , category ='" + t.getCategory()+"'"+
+						" , product_description ='" + t.getProduct_description()+"'"+
+						" , updated_at = sysdate()"+
 						"  WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -73,14 +82,14 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public int delete(User t) {
+	public int delete(Product t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "DELETE from users "+
+			String sql = "DELETE from products "+
 						" WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -97,24 +106,27 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public ArrayList<User> selectAll() {
-		ArrayList<User> result = new ArrayList<User>();
+	public ArrayList<Product> selectAll() {
+		ArrayList<Product> result = new ArrayList<Product>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users";
+			String sql = "SELECT * FROM products";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
+				String product_name = rs.getString("product_name");
+				int price = rs.getInt("price");
+				String product_status = rs.getString("product_status");
+				int quantity = rs.getInt("quantity");
+				String category = rs.getString("category");
+				String product_description = rs.getString("product_description");
 				
-				User user = new User(id,username,password,role);
-				result.add(user);
+				Product product = new Product(id, product_name, price, product_status, quantity,category, product_description);
+				result.add(product);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -127,24 +139,27 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public User selectById(User t) {
-		User result = null;
+	public Product selectById(Product t) {
+		Product result = null;
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users where id='"+t.getId()+"'";
+			String sql = "SELECT * FROM products where id ="+t.getId();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
+				String product_name = rs.getString("product_name");
+				int price = rs.getInt("price");
+				String product_status = rs.getString("product_status");
+				int quantity = rs.getInt("quantity");
+				String category = rs.getString("category");
+				String product_description = rs.getString("product_description");
 				
-				User user = new User(id,username,password,role);
-				result = user;
+				Product product = new Product(id, product_name, price, product_status, quantity, category, product_description);
+				result = product;
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -157,24 +172,27 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public ArrayList<User> selectByCondition(String condition) {
-		ArrayList<User> result = new ArrayList<User>();
+	public ArrayList<Product> selectByCondition(String condition) {
+		ArrayList<Product> result = new ArrayList<Product>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users where "+ condition;
+			String sql = "SELECT * FROM products where "+condition;
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
+				String product_name = rs.getString("product_name");
+				int price = rs.getInt("price");
+				String product_status = rs.getString("product_status");
+				int quantity = rs.getInt("quantity");
+				String category = rs.getString("category");
+				String product_description = rs.getString("product_description");
 				
-				User user = new User(id,username,password,role);
-				result.add(user);
+				Product product = new Product(id, product_name, price, product_status, quantity, category, product_description);
+				result.add(product);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);

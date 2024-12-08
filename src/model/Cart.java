@@ -3,10 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCart {
+public class Cart {
     private List<Product> cartItems;
 
-    public ShoppingCart() {
+    public Cart() {
         cartItems = new ArrayList<>();
     }
 

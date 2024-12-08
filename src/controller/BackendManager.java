@@ -10,45 +10,41 @@ import java.util.List;
 
 public class BackendManager {
     private List<Product> products;
-    private List<Customer> customers;
+    private List<User> users;
     private List<Order> orders;
 
     public BackendManager() {
         products = new ArrayList<>();
-        customers = new ArrayList<>();
+        users = new ArrayList<>();
         orders = new ArrayList<>();
 
         // Create sample users and customers
-        User adminUser = new User("admin", "password123", "Manager");  // Manager role
-        Customer adminCustomer = new Customer(1, "Admin User", "admin@example.com", "123 Admin St", adminUser);
-        customers.add(adminCustomer);
-
+        User adminUser = new User(1,"admin", "password123", "Manager");  // Manager role
+        users.add(adminUser);
         // Create a normal customer
-        User user1 = new User("user1", "password1", "Customer");  // Customer role
-        Customer customer1 = new Customer(2, "John Doe", "john@example.com", "456 Main St", user1);
-        customers.add(customer1);
+        User user1 = new User(1, "user1", "password1", "Customer");  // Customer role
+        users.add(user1);
     }
 
     // Add Product
-    public void addProduct(Product product) {
-        products.add(product);
-    }
+    //public void addProduct(Product product) {
+      //.add(product);
+    //}
 
     // Add Customer
-    public void addCustomer(Customer customer) {
-        customers.add(customer);
-    }
+    //public void addCustomer(Customer customer) {
+    //    customers.add(customer);
+    //}
 
     // Create Order
-    public void createOrder(Customer customer, List<Product> products) {
-        Order order = new Order(orders.size() + 1, customer, products);
-        orders.add(order);
-    }
+    //public void createOrder(Customer customer, List<Product> products) {
+    //    Order order = new Order(orders.size() + 1, customer, products);
+    //    orders.add(order);
+    //}
 
     // Authenticate User
     public User authenticateUser(String username, String password) {
-        for (Customer customer : customers) {
-            User user = customer.getUser();
+        for (User user : users) {
             if (user.getUsername().equals(username) && user.authenticate(password)) {
                 return user;  // Return the authenticated user
             }
@@ -61,9 +57,9 @@ public class BackendManager {
         return products;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customers;
-    }
+    //public List<Customer> getAllCustomers() {
+    //    return customers;
+    //}
 
     public List<Order> getAllOrders() {
         return orders;

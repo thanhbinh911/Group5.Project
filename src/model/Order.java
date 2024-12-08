@@ -42,10 +42,10 @@ public class Order {
     public String getOrderDetails() {
         StringBuilder productNames = new StringBuilder();
         for (Product product : products) {
-            productNames.append(product.getName()).append(", ");
+            productNames.append(product.getProduct_name()).append(", ");
         }
         return "Order ID: " + orderId + "\n" +
-                "Customer: " + customer.getName() + "\n" +
+                "Customer: " + customer.getFull_name() + "\n" +
                 "Products: " + productNames.toString();
     }
 
@@ -53,7 +53,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", customer=" + customer.getName() +
+                ", customer=" + customer.getFull_name() +
                 ", products=" + products +
                 '}';
     }

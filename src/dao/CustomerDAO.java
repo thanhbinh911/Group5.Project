@@ -1,34 +1,39 @@
 package dao;
 
-import java.util.ArrayList;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
-import model.User;
 import database.JDBCUtil;
+import model.Customer;
 
-public class UserDAO implements DAOInterface<User>{
-
-	public static UserDAO getInstance() {
-		return new UserDAO();
+public class CustomerDAO implements DAOInterface<Customer> {
+	
+	public static CustomerDAO getInstance() {
+		return new CustomerDAO();
 	}
 
 	@Override
-	public int add(User t) {
+	public int add(Customer t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "INSERT INTO users (id, username, password, role)"+
+			String sql = "INSERT INTO customers (id, user_name, full_name, phone_number, email, password, address, created_at, updated_at)"+
 						" VALUE ("+
-						t.getId()+" , '"+
-						t.getUsername()+"' , '"+
-						t.getPassword()+"' , '"+ 
-						t.getRole()+"')";
+						t.getId() +" , '"+
+						t.getUser_name() +"' , '"+
+						t.getFull_name() +"' , '"+ 
+						t.getPhone_number() +"' , '"+
+						t.getEmail() +"' , '"+ 
+						t.getPassword() +"' , '"+ 
+						t.getAddress() +"' , "+
+						"sysdate() , " +
+						"sysdate()" +")";
 			int result = st.executeUpdate(sql);
 			//Print
 			System.out.println("Executed: "+ sql);
@@ -45,18 +50,22 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public int update(User t) {
+	public int update(Customer t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "UPDATE users "+
+			String sql = "UPDATE customers "+
 						" SET " +
-						" username ='" + t.getUsername()+"'"+
+						" user_name ='" + t.getUser_name()+"'"+
+						" , full_name ='" + t.getFull_name()+"'"+
+						" , phone_number ='" + t.getPhone_number()+"'"+
+						" , email ='" + t.getEmail()+"'"+
 						" , password ='" + t.getPassword()+"'"+
-						" , role ='" + t.getRole()+"'"+
+						" , address ='" + t.getAddress()+"'"+
+						" , updated_at = sysdate()"+
 						"  WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -73,14 +82,14 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public int delete(User t) {
+	public int delete(Customer t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "DELETE from users "+
+			String sql = "DELETE from customers "+
 						" WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -97,24 +106,27 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public ArrayList<User> selectAll() {
-		ArrayList<User> result = new ArrayList<User>();
+	public ArrayList<Customer> selectAll() {
+		ArrayList<Customer> result = new ArrayList<Customer>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users";
+			String sql = "SELECT * FROM customers";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
+				String user_name = rs.getString("user_name");
+				String full_name = rs.getString("full_name");
+				String phone_number = rs.getString("phone_number");
+				String email = rs.getString("email");
 				String password = rs.getString("password");
-				String role = rs.getString("role");
+				String address = rs.getString("address");
 				
-				User user = new User(id,username,password,role);
-				result.add(user);
+				Customer customer = new Customer(id,user_name,full_name,phone_number,email,password,address);
+				result.add(customer);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -127,24 +139,27 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public User selectById(User t) {
-		User result = null;
+	public Customer selectById(Customer t) {
+		Customer result = null;
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users where id='"+t.getId()+"'";
+			String sql = "SELECT * FROM customers where id ="+t.getId();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
+				String user_name = rs.getString("user_name");
+				String full_name = rs.getString("full_name");
+				String phone_number = rs.getString("phone_number");
+				String email = rs.getString("email");
 				String password = rs.getString("password");
-				String role = rs.getString("role");
+				String address = rs.getString("address");
 				
-				User user = new User(id,username,password,role);
-				result = user;
+				Customer customer = new Customer(id,user_name,full_name,phone_number,email,password,address);
+				result = customer;
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -157,24 +172,27 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public ArrayList<User> selectByCondition(String condition) {
-		ArrayList<User> result = new ArrayList<User>();
+	public ArrayList<Customer> selectByCondition(String condition) {
+		ArrayList<Customer> result = new ArrayList<Customer>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users where "+ condition;
+			String sql = "SELECT * FROM customers where "+condition;
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
+				String user_name = rs.getString("user_name");
+				String full_name = rs.getString("full_name");
+				String phone_number = rs.getString("phone_number");
+				String email = rs.getString("email");
 				String password = rs.getString("password");
-				String role = rs.getString("role");
+				String address = rs.getString("address");
 				
-				User user = new User(id,username,password,role);
-				result.add(user);
+				Customer customer = new Customer(id,user_name,full_name,phone_number,email,password,address);
+				result.add(customer);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);

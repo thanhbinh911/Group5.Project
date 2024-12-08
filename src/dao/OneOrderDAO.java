@@ -1,34 +1,37 @@
 package dao;
 
-import java.util.ArrayList;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
-import model.User;
 import database.JDBCUtil;
+import model.OneOrder;
 
-public class UserDAO implements DAOInterface<User>{
-
-	public static UserDAO getInstance() {
-		return new UserDAO();
+public class OneOrderDAO implements DAOInterface<OneOrder> {
+	
+	public static OneOrderDAO getInstance() {
+		return new OneOrderDAO();
 	}
 
 	@Override
-	public int add(User t) {
+	public int add(OneOrder t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "INSERT INTO users (id, username, password, role)"+
+			String sql = "INSERT INTO orders (id, customer_id, product_id, quanity, order_status, created_at, updated_at)"+
 						" VALUE ("+
-						t.getId()+" , '"+
-						t.getUsername()+"' , '"+
-						t.getPassword()+"' , '"+ 
-						t.getRole()+"')";
+						t.getId() +" , "+
+						t.getCustomer_id() +" , "+
+						t.getProduct_id() +" , "+
+						t.getQuantity() +" , '"+
+						t.getOrder_status() +"' , "+
+						"sysdate() , " +
+						"sysdate()" +")";
 			int result = st.executeUpdate(sql);
 			//Print
 			System.out.println("Executed: "+ sql);
@@ -45,18 +48,20 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public int update(User t) {
+	public int update(OneOrder t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "UPDATE users "+
+			String sql = "UPDATE orders "+
 						" SET " +
-						" username ='" + t.getUsername()+"'"+
-						" , password ='" + t.getPassword()+"'"+
-						" , role ='" + t.getRole()+"'"+
+						" customer_id =" + t.getCustomer_id()+""+
+						" product_id =" + t.getProduct_id()+""+
+						" quanity =" + t.getQuantity()+""+
+						" , order_status =" + t.getOrder_status()+""+
+						" , updated_at = sysdate()"+
 						"  WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -73,14 +78,14 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public int delete(User t) {
+	public int delete(OneOrder t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "DELETE from users "+
+			String sql = "DELETE from orders "+
 						" WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -97,24 +102,25 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public ArrayList<User> selectAll() {
-		ArrayList<User> result = new ArrayList<User>();
+	public ArrayList<OneOrder> selectAll() {
+		ArrayList<OneOrder> result = new ArrayList<OneOrder>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users";
+			String sql = "SELECT * FROM orders";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
+				int customer_id = rs.getInt("customer_id");
+				int product_id = rs.getInt("product_id");
+				int quantity = rs.getInt("quantity");
+				String order_status = rs.getString("order_status");
 				
-				User user = new User(id,username,password,role);
-				result.add(user);
+				OneOrder order = new OneOrder( id, customer_id, product_id, quantity, order_status);
+				result.add(order);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -127,24 +133,25 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public User selectById(User t) {
-		User result = null;
+	public OneOrder selectById(OneOrder t) {
+		OneOrder result = null;
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users where id='"+t.getId()+"'";
+			String sql = "SELECT * FROM orders where id ="+t.getId();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
+				int customer_id = rs.getInt("customer_id");
+				int product_id = rs.getInt("product_id");
+				int quantity = rs.getInt("quantity");
+				String order_status = rs.getString("order_status");
 				
-				User user = new User(id,username,password,role);
-				result = user;
+				OneOrder order = new OneOrder( id, customer_id, product_id, quantity, order_status);
+				result = order;
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -157,24 +164,25 @@ public class UserDAO implements DAOInterface<User>{
 	}
 
 	@Override
-	public ArrayList<User> selectByCondition(String condition) {
-		ArrayList<User> result = new ArrayList<User>();
+	public ArrayList<OneOrder> selectByCondition(String condition) {
+		ArrayList<OneOrder> result = new ArrayList<OneOrder>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM users where "+ condition;
+			String sql = "SELECT * FROM orders where "+condition;
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
+				int customer_id = rs.getInt("customer_id");
+				int product_id = rs.getInt("product_id");
+				int quantity = rs.getInt("quantity");
+				String order_status = rs.getString("order_status");
 				
-				User user = new User(id,username,password,role);
-				result.add(user);
+				OneOrder order = new OneOrder( id, customer_id, product_id, quantity, order_status);
+				result.add(order);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);

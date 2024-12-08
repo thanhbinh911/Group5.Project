@@ -24,7 +24,7 @@ public class ShoppingAppGUI extends JFrame {
 
         // Adding the products to the panel
         for (Product product : backendManager.getAllProducts()) {
-            productPanel.add(new JLabel(product.getName()));  // Display product names
+            productPanel.add(new JLabel(product.getProduct_name()));  // Display product names
         }
 
         // Add the panel to the frame in a scrollable view
