@@ -7,32 +7,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import database.JDBCUtil;
-import model.Product;
+import model.category_detail;
 
-public class ProductDAO implements DAOInterface<Product> {
+public class category_detailDAO implements DAOInterface<category_detail> {
 	
-	public static ProductDAO getInstance() {
-		return new ProductDAO();
+	public static category_detailDAO getInstance() {
+		return new category_detailDAO();
 	}
 
 	@Override
-	public int add(Product t) {
+	public int add(category_detail t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "INSERT INTO products (id, product_name, price, product_status, quantity, product_description, created_at, updated_at)"+
+			String sql = "INSERT INTO category_detail (id, category_id, product_id)"+
 						" VALUE ("+
 						t.getId() +" , '"+
-						t.getProduct_name() +"' , "+
-						t.getPrice() +" , '"+
-						t.getProduct_status() +"' , "+ 
-						t.getQuantity() +" , '"+
-						t.getProduct_description() +"' , '"+ 
-						"sysdate() , " +
-						"sysdate()" +")";
+						t.getCategory_id() +" , "+
+						t.getProduct_id() +")";
+
 			int result = st.executeUpdate(sql);
 			//Print
 			System.out.println("Executed: "+ sql);
@@ -49,21 +45,17 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public int update(Product t) {
+	public int update(category_detail t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "UPDATE products "+
+			String sql = "UPDATE category_detail "+
 						" SET " +
-						" product_name ='" + t.getProduct_name()+"'"+
-						" , price =" + t.getPrice()+""+
-						" , product_status ='" + t.getProduct_status()+"'"+
-						" , quantity =" + t.getQuantity()+""+
-						" , product_description ='" + t.getProduct_description()+"'"+
-						" , updated_at = sysdate()"+
+						" category_id =" + t.getCategory_id()+""+
+						" product_id =" + t.getProduct_id()+""+
 						"  WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -80,14 +72,14 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public int delete(Product t) {
+	public int delete(category_detail t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "DELETE from products "+
+			String sql = "DELETE from category_detail "+
 						" WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -104,26 +96,23 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public ArrayList<Product> selectAll() {
-		ArrayList<Product> result = new ArrayList<Product>();
+	public ArrayList<category_detail> selectAll() {
+		ArrayList<category_detail> result = new ArrayList<category_detail>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM products";
+			String sql = "SELECT * FROM category_detail";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String product_name = rs.getString("product_name");
-				int price = rs.getInt("price");
-				String product_status = rs.getString("product_status");
-				int quantity = rs.getInt("quantity");
-				String product_description = rs.getString("product_description");
+				int category_id = rs.getInt("category_id");
+				int product_id = rs.getInt("product_id");
 				
-				Product product = new Product(id, product_name, price, product_status, quantity, product_description);
-				result.add(product);
+				category_detail category_detail = new category_detail( id, category_id, product_id);
+				result.add(category_detail);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -136,26 +125,23 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public Product selectById(Product t) {
-		Product result = null;
+	public category_detail selectById(category_detail t) {
+		category_detail result = null;
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM products where id ="+t.getId();
+			String sql = "SELECT * FROM category_detail where id ="+t.getId();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String product_name = rs.getString("product_name");
-				int price = rs.getInt("price");
-				String product_status = rs.getString("product_status");
-				int quantity = rs.getInt("quantity");
-				String product_description = rs.getString("product_description");
+				int category_id = rs.getInt("category_id");
+				int product_id = rs.getInt("product_id");
 				
-				Product product = new Product(id, product_name, price, product_status, quantity, product_description);
-				result = product;
+				category_detail category_detail = new category_detail( id, category_id, product_id);
+				result = category_detail;
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -168,26 +154,23 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public ArrayList<Product> selectByCondition(String condition) {
-		ArrayList<Product> result = new ArrayList<Product>();
+	public ArrayList<category_detail> selectByCondition(String condition) {
+		ArrayList<category_detail> result = new ArrayList<category_detail>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM products where "+condition;
+			String sql = "SELECT * FROM category_detail where "+condition;
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String product_name = rs.getString("product_name");
-				int price = rs.getInt("price");
-				String product_status = rs.getString("product_status");
-				int quantity = rs.getInt("quantity");
-				String product_description = rs.getString("product_description");
+				int category_id = rs.getInt("category_id");
+				int product_id = rs.getInt("product_id");
 				
-				Product product = new Product(id, product_name, price, product_status, quantity, product_description);
-				result.add(product);
+				category_detail category_detail = new category_detail( id, category_id, product_id);
+				result.add(category_detail);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);

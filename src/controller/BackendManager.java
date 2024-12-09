@@ -11,12 +11,10 @@ import java.util.List;
 public class BackendManager {
     private List<Product> products;
     private List<User> users;
-    private List<Order> orders;
 
     public BackendManager() {
         products = new ArrayList<>();
         users = new ArrayList<>();
-        orders = new ArrayList<>();
 
         // Create sample users and customers
         User adminUser = new User(1,"admin", "password123", "Manager");  // Manager role
@@ -61,7 +59,7 @@ public class BackendManager {
     //    return customers;
     //}
 
-    public List<Order> getAllOrders() {
-        return orders;
-    }
+    //public List<Order> getAllOrders() {
+     //   return orders;
+    
 }

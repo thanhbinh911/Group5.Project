@@ -7,32 +7,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import database.JDBCUtil;
-import model.Product;
+import model.Cart;
 
-public class ProductDAO implements DAOInterface<Product> {
+public class CartDAO implements DAOInterface<Cart> {
 	
-	public static ProductDAO getInstance() {
-		return new ProductDAO();
+	public static CartDAO getInstance() {
+		return new CartDAO();
 	}
 
 	@Override
-	public int add(Product t) {
+	public int add(Cart t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "INSERT INTO products (id, product_name, price, product_status, quantity, product_description, created_at, updated_at)"+
+			String sql = "INSERT INTO cart (id, customer_id, product_id, quantity)"+
 						" VALUE ("+
-						t.getId() +" , '"+
-						t.getProduct_name() +"' , "+
-						t.getPrice() +" , '"+
-						t.getProduct_status() +"' , "+ 
-						t.getQuantity() +" , '"+
-						t.getProduct_description() +"' , '"+ 
-						"sysdate() , " +
-						"sysdate()" +")";
+						t.getId() +" , "+
+						t.getCustomer_id() +" , "+
+						t.getProduct_id() +" , "+
+						t.getQuantity() +")";
+
 			int result = st.executeUpdate(sql);
 			//Print
 			System.out.println("Executed: "+ sql);
@@ -49,21 +46,18 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public int update(Product t) {
+	public int update(Cart t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "UPDATE products "+
+			String sql = "UPDATE cart "+
 						" SET " +
-						" product_name ='" + t.getProduct_name()+"'"+
-						" , price =" + t.getPrice()+""+
-						" , product_status ='" + t.getProduct_status()+"'"+
+						" customer_id =" + t.getCustomer_id()+""+
+						" , product_id =" + t.getProduct_id()+""+
 						" , quantity =" + t.getQuantity()+""+
-						" , product_description ='" + t.getProduct_description()+"'"+
-						" , updated_at = sysdate()"+
 						"  WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -80,14 +74,14 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public int delete(Product t) {
+	public int delete(Cart t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "DELETE from products "+
+			String sql = "DELETE from cart "+
 						" WHERE id ='" + t.getId() + "\'";
 			int result = st.executeUpdate(sql);
 			//Print
@@ -104,26 +98,24 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public ArrayList<Product> selectAll() {
-		ArrayList<Product> result = new ArrayList<Product>();
+	public ArrayList<Cart> selectAll() {
+		ArrayList<Cart> result = new ArrayList<Cart>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM products";
+			String sql = "SELECT * FROM cart";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String product_name = rs.getString("product_name");
-				int price = rs.getInt("price");
-				String product_status = rs.getString("product_status");
+				int customer_id = rs.getInt("customer_id");
+				int product_id = rs.getInt("product_id");
 				int quantity = rs.getInt("quantity");
-				String product_description = rs.getString("product_description");
 				
-				Product product = new Product(id, product_name, price, product_status, quantity, product_description);
-				result.add(product);
+				Cart cart = new Cart( id, customer_id, product_id, quantity);
+				result.add(cart);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -136,26 +128,24 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public Product selectById(Product t) {
-		Product result = null;
+	public Cart selectById(Cart t) {
+		Cart result = null;
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM products where id ="+t.getId();
+			String sql = "SELECT * FROM cart where id ="+t.getId();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String product_name = rs.getString("product_name");
-				int price = rs.getInt("price");
-				String product_status = rs.getString("product_status");
+				int customer_id = rs.getInt("customer_id");
+				int product_id = rs.getInt("product_id");
 				int quantity = rs.getInt("quantity");
-				String product_description = rs.getString("product_description");
 				
-				Product product = new Product(id, product_name, price, product_status, quantity, product_description);
-				result = product;
+				Cart cart = new Cart( id, customer_id, product_id, quantity);
+				result = cart;
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);
@@ -168,26 +158,24 @@ public class ProductDAO implements DAOInterface<Product> {
 	}
 
 	@Override
-	public ArrayList<Product> selectByCondition(String condition) {
-		ArrayList<Product> result = new ArrayList<Product>();
+	public ArrayList<Cart> selectByCondition(String condition) {
+		ArrayList<Cart> result = new ArrayList<Cart>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "SELECT * FROM products where "+condition;
+			String sql = "SELECT * FROM cart where "+condition;
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String product_name = rs.getString("product_name");
-				int price = rs.getInt("price");
-				String product_status = rs.getString("product_status");
+				int customer_id = rs.getInt("customer_id");
+				int product_id = rs.getInt("product_id");
 				int quantity = rs.getInt("quantity");
-				String product_description = rs.getString("product_description");
 				
-				Product product = new Product(id, product_name, price, product_status, quantity, product_description);
-				result.add(product);
+				Cart cart = new Cart( id, customer_id, product_id, quantity);
+				result.add(cart);
 			}
 			//Close connection
 			JDBCUtil.closeConnection(con);

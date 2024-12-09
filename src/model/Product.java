@@ -4,14 +4,13 @@ public class Product {
 	public Product() {
 		super();
 	}
-	public Product(int id, String product_name, int price, String product_status, int quantity, String category, String product_description) {
+	public Product(int id, String product_name, int price, String product_status, int quantity, String product_description) {
 		super();
 		this.id = id;
 		this.product_name = product_name;
 		this.price = price;
 		this.product_status = product_status;
 		this.quantity = quantity;
-		this.category = category;
 		this.product_description = product_description;
 	}
 	private int id;
@@ -19,7 +18,6 @@ public class Product {
 	private int price;
 	private String product_status;
 	private int quantity;
-	private String category;
 	private String product_description;
 	public int getId() {
 		return id;
@@ -51,12 +49,6 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
 	public String getProduct_description() {
 		return product_description;
 	}
@@ -66,8 +58,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", product_name=" + product_name + ", price=" + price + ", product_status="
-				+ product_status + ", quantity=" + quantity + ", category=" + category + ", product_description="
-				+ product_description + "]";
+				+ product_status + ", quantity=" + quantity + ", product_description=" + product_description + "]";
 	}
 	
 }

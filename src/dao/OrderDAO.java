@@ -7,28 +7,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import database.JDBCUtil;
-import model.OneOrder;
+import model.Order;
 
-public class OneOrderDAO implements DAOInterface<OneOrder> {
+public class OrderDAO implements DAOInterface<Order> {
 	
-	public static OneOrderDAO getInstance() {
-		return new OneOrderDAO();
+	public static OrderDAO getInstance() {
+		return new OrderDAO();
 	}
 
 	@Override
-	public int add(OneOrder t) {
+	public int add(Order t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
 			//Statement
 			Statement st = con.createStatement();
 			//execute SQL query
-			String sql = "INSERT INTO orders (id, customer_id, product_id, quanity, order_status, created_at, updated_at)"+
+			String sql = "INSERT INTO orders (id, customer_id, order_status, created_at, updated_at)"+
 						" VALUE ("+
 						t.getId() +" , "+
-						t.getCustomer_id() +" , "+
-						t.getProduct_id() +" , "+
-						t.getQuantity() +" , '"+
+						t.getCustomer_id() +" , '"+
 						t.getOrder_status() +"' , "+
 						"sysdate() , " +
 						"sysdate()" +")";
@@ -48,7 +46,7 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 	}
 
 	@Override
-	public int update(OneOrder t) {
+	public int update(Order t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
@@ -58,8 +56,6 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 			String sql = "UPDATE orders "+
 						" SET " +
 						" customer_id =" + t.getCustomer_id()+""+
-						" product_id =" + t.getProduct_id()+""+
-						" quanity =" + t.getQuantity()+""+
 						" , order_status =" + t.getOrder_status()+""+
 						" , updated_at = sysdate()"+
 						"  WHERE id ='" + t.getId() + "\'";
@@ -78,7 +74,7 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 	}
 
 	@Override
-	public int delete(OneOrder t) {
+	public int delete(Order t) {
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
@@ -102,8 +98,8 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 	}
 
 	@Override
-	public ArrayList<OneOrder> selectAll() {
-		ArrayList<OneOrder> result = new ArrayList<OneOrder>();
+	public ArrayList<Order> selectAll() {
+		ArrayList<Order> result = new ArrayList<Order>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
@@ -115,11 +111,9 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				int customer_id = rs.getInt("customer_id");
-				int product_id = rs.getInt("product_id");
-				int quantity = rs.getInt("quantity");
 				String order_status = rs.getString("order_status");
 				
-				OneOrder order = new OneOrder( id, customer_id, product_id, quantity, order_status);
+				Order order = new Order( id, customer_id, order_status);
 				result.add(order);
 			}
 			//Close connection
@@ -133,8 +127,8 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 	}
 
 	@Override
-	public OneOrder selectById(OneOrder t) {
-		OneOrder result = null;
+	public Order selectById(Order t) {
+		Order result = null;
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
@@ -146,11 +140,9 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				int customer_id = rs.getInt("customer_id");
-				int product_id = rs.getInt("product_id");
-				int quantity = rs.getInt("quantity");
 				String order_status = rs.getString("order_status");
 				
-				OneOrder order = new OneOrder( id, customer_id, product_id, quantity, order_status);
+				Order order = new Order( id, customer_id, order_status);
 				result = order;
 			}
 			//Close connection
@@ -164,8 +156,8 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 	}
 
 	@Override
-	public ArrayList<OneOrder> selectByCondition(String condition) {
-		ArrayList<OneOrder> result = new ArrayList<OneOrder>();
+	public ArrayList<Order> selectByCondition(String condition) {
+		ArrayList<Order> result = new ArrayList<Order>();
 		try {
 			//Connect to DB
 			Connection con = JDBCUtil.openConnection();
@@ -177,11 +169,9 @@ public class OneOrderDAO implements DAOInterface<OneOrder> {
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				int customer_id = rs.getInt("customer_id");
-				int product_id = rs.getInt("product_id");
-				int quantity = rs.getInt("quantity");
 				String order_status = rs.getString("order_status");
 				
-				OneOrder order = new OneOrder( id, customer_id, product_id, quantity, order_status);
+				Order order = new Order( id, customer_id, order_status);
 				result.add(order);
 			}
 			//Close connection
