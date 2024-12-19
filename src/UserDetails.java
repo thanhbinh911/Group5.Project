@@ -1,6 +1,4 @@
 
-
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -17,37 +15,33 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-/**
- * This class is the view shows customer's personal information.
- */
 public class UserDetails extends JDialog {
-
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField fullName;
 	private JTextField phoneNumber;
 	private JTextField homeAddr;
-	private JTextField cardNum;
-	private JTextField doB;
+	private JTextField cardNumber;
+	private JTextField email;
 
-	public static void display(ShopController c){
+    public static void display(ShopController c){
 		UserDetails dialog = new UserDetails(c);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setLocationRelativeTo(c.getWindow());
 		dialog.setVisible(true);
 	}
-	
-	public Customer toCustomer(Customer customer){
+
+    public Customer toCustomer(Customer customer){
 		customer.setAddress(homeAddr.getText());
-		customer.setName(fullName.getText());
-		customer.setCardNumber(cardNum.getText());
-		customer.setPhone(phoneNumber.getText());
+		customer.setFullName(fullName.getText());
+		customer.setCardNumber(cardNumber.getText());
+		customer.setPhoneNumber(phoneNumber.getText());
+        customer.setEmail(email.getText());
 		return customer;
-//		return new Customer(fullName.getText(), homeAddr.getText(), cardNum.getText(), phoneNumber.getText());
 	}
-	
-	public UserDetails(final ShopController c) {
+
+    public UserDetails(final ShopController c) {
 		
 		Customer user = c.getCurrentCustomerDetails();
 		
@@ -63,7 +57,7 @@ public class UserDetails extends JDialog {
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
-		{
+        {
 			JLabel lblFullName = new JLabel("Full name:");
 			lblFullName.setHorizontalAlignment(SwingConstants.LEFT);
 			GridBagConstraints gbc_lblFullName = new GridBagConstraints();
@@ -81,7 +75,7 @@ public class UserDetails extends JDialog {
 			gbc_fullName.gridy = 1;
 			contentPanel.add(fullName, gbc_fullName);
 			fullName.setColumns(10);
-			fullName.setText(user.getName());
+			fullName.setText(user.getFullName());
 		}
 		{
 			JLabel lblPhoneNumber = new JLabel("Phone number:");
@@ -101,7 +95,7 @@ public class UserDetails extends JDialog {
 			gbc_phoneNumber.gridy = 2;
 			contentPanel.add(phoneNumber, gbc_phoneNumber);
 			phoneNumber.setColumns(10);
-			phoneNumber.setText(user.getPhone());
+			phoneNumber.setText(user.getPhoneNumber());
 		}
 		{
 			JLabel lblHomeAddress = new JLabel("Home address:");
@@ -134,35 +128,35 @@ public class UserDetails extends JDialog {
 			contentPanel.add(lblCardNumber, gbc_lblCardNumber);
 		}
 		{
-			cardNum = new JTextField();
-			GridBagConstraints gbc_cardNum = new GridBagConstraints();
-			gbc_cardNum.insets = new Insets(0, 0, 0, 5);
-			gbc_cardNum.fill = GridBagConstraints.HORIZONTAL;
-			gbc_cardNum.gridx = 2;
-			gbc_cardNum.gridy = 4;
-			contentPanel.add(cardNum, gbc_cardNum);
-			cardNum.setColumns(10);
-			cardNum.setText(user.getCardNumber());
+			cardNumber = new JTextField();
+			GridBagConstraints gbc_cardNumber = new GridBagConstraints();
+			gbc_cardNumber.insets = new Insets(0, 0, 0, 5);
+			gbc_cardNumber.fill = GridBagConstraints.HORIZONTAL;
+			gbc_cardNumber.gridx = 2;
+			gbc_cardNumber.gridy = 4;
+			contentPanel.add(cardNumber, gbc_cardNumber);
+			cardNumber.setColumns(10);
+			cardNumber.setText(user.getCardNumber());
 		}
 		{
-			JLabel lblDoB = new JLabel("Date of Birth:");
-			GridBagConstraints gbc_lblDoB = new GridBagConstraints();
-			gbc_lblDoB.anchor = GridBagConstraints.EAST;
-			gbc_lblDoB.insets = new Insets(0, 0, 0, 5);
-			gbc_lblDoB.gridx = 1;
-			gbc_lblDoB.gridy = 5;
-			contentPanel.add(lblDoB, gbc_lblDoB);
+			JLabel lblEmail = new JLabel("Email:");
+			GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+			gbc_lblEmail.anchor = GridBagConstraints.EAST;
+			gbc_lblEmail.insets = new Insets(0, 0, 0, 5);
+			gbc_lblEmail.gridx = 1;
+			gbc_lblEmail.gridy = 5;
+			contentPanel.add(lblEmail, gbc_lblEmail);
 		}
 		{
-			doB = new JTextField();
-			GridBagConstraints gbc_DoB = new GridBagConstraints();
-			gbc_DoB.insets = new Insets(0, 0, 0, 5);
-			gbc_DoB.fill = GridBagConstraints.HORIZONTAL;
-			gbc_DoB.gridx = 2;
-			gbc_DoB.gridy = 5;
-			contentPanel.add(doB, gbc_DoB);
-			doB.setColumns(10);
-			doB.setText(user.getDob());
+			email = new JTextField();
+			GridBagConstraints gbc_Email = new GridBagConstraints();
+			gbc_Email.insets = new Insets(0, 0, 0, 5);
+			gbc_Email.fill = GridBagConstraints.HORIZONTAL;
+			gbc_Email.gridx = 2;
+			gbc_Email.gridy = 5;
+			contentPanel.add(email, gbc_Email);
+			email.setColumns(10);
+			email.setText(user.getEmail());
 		}
 		{
 			JPanel buttonPane = new JPanel();

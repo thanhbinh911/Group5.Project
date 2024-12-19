@@ -1,7 +1,5 @@
 
-/**
- * This is the entry of the whole system.
- */
+
 public class Main {
 
 	public static void main(String[] args){
@@ -12,5 +10,4 @@ public class Main {
 		c.init();
 		
 	}
-        
 }

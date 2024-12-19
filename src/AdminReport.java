@@ -1,11 +1,6 @@
-/***
- * Admin report entity
- * @author zjw
- *
- */
+
 public class AdminReport {
-	//CustomerID", "Name", "OrderID", "Ordered date","Item name","Quantitiy of item
-	private String customerId;
+    private String customerId;
 	private String customerName;
 	private String orderId;
 	private String orderedDate;
@@ -63,6 +58,4 @@ public class AdminReport {
 	public void setQuantityOfItem(String quantityOfItem) {
 		this.quantityOfItem = quantityOfItem;
 	}
-	
-	
 }

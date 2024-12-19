@@ -1,10 +1,9 @@
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -15,9 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-/**
- *This view is worked as a main view when admin logged into the system, which shows all products in the system.
- */
+
 public class AdminProductListView extends View {
 
 	private static final long serialVersionUID = 1L;
@@ -28,10 +25,9 @@ public class AdminProductListView extends View {
 	private static final String[] TABLE_COLUMNS = { "Type", "Name", "Price",
 			"Quantity" };
 
-	// ///////////
-	// Type content
-	public static final ProductType[] TYPE = { ProductType.GAME, ProductType.MUSIC, ProductType.MOVIE,
-		ProductType.TV };
+
+	public static final ProductType[] TYPE = { ProductType.ELECTRONICS, ProductType.SPORTSANDBOOKS, ProductType.FASHION,
+		ProductType.HOMEANDFURNITURE };
 
 	private JComboBox<?> productType;
 
@@ -52,17 +48,17 @@ public class AdminProductListView extends View {
 				ProductType productType = (ProductType) getProductType()
 						.getSelectedItem();
 				switch (productType) {
-				case GAME:
-					AdminProductDetails.displayGameDetails(tableModel, getController(),ProductType.GAME);
+				case ELECTRONICS:
+					AdminProductDetails.displayElectronicsDetails(tableModel, getController(),ProductType.ELECTRONICS);
 					break;
-				case MUSIC:
-					AdminProductDetails.displayMusicDetails(tableModel, getController(),ProductType.MUSIC);
+				case SPORTSANDBOOKS:
+					AdminProductDetails.displaySportsandbooksDetails(tableModel, getController(),ProductType.SPORTSANDBOOKS);
 					break;
-				case MOVIE:
-					AdminProductDetails.displayMovieDetails(tableModel, getController(),ProductType.MOVIE);
+				case FASHION:
+					AdminProductDetails.displayFashionDetails(tableModel, getController(),ProductType.FASHION);
 					break;
-				case TV:
-					AdminProductDetails.displayTVDetails(tableModel, getController(),ProductType.TV);
+				case HOMEANDFURNITURE:
+					AdminProductDetails.displayHomeandfurnitureDetails(tableModel, getController(),ProductType.HOMEANDFURNITURE);
 					break;
 					default:break;
 				}
@@ -80,17 +76,14 @@ public class AdminProductListView extends View {
 
 		panel.add(cartButton);
 
-		// ////////// log out
 		JButton logoutBtn = new JButton("Logout");
 		logoutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null,
 						"Do you want to logout and save all changes?", "Confirm", 2);
 				if (dialogResult == JOptionPane.YES_OPTION) {
-					// save cart data
-//					getController().storeCartData();
+
 					getController().storeProductInfoByAdmin();
-					// redirect to log in view
 					getController().getWindow().dispose();
 					getController().init();
 				}
@@ -98,14 +91,11 @@ public class AdminProductListView extends View {
 		});
 		panel.add(logoutBtn);
 
-		// //////////////////
-		// create table
 		this.productTable = new JTable(new DefaultTableModel(TABLE_COLUMNS, 0));
 		tableModel = (DefaultTableModel) productTable.getModel();
 
 		this.productTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-		// set different columns width
 		TableColumnModel propertyTableColumnModel = this.productTable
 				.getColumnModel();
 		propertyTableColumnModel.getColumn(0).setPreferredWidth(200);
@@ -113,10 +103,8 @@ public class AdminProductListView extends View {
 		propertyTableColumnModel.getColumn(2).setPreferredWidth(200);
 		propertyTableColumnModel.getColumn(3).setPreferredWidth(200);
 
-		// / Add product table
 		scrollPanel = new JPanel();
 		JScrollPane scroll = new JScrollPane(productTable);
-//		scrollPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -152,3 +140,5 @@ public class AdminProductListView extends View {
 	}
 
 }
+
+

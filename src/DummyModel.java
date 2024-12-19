@@ -1,16 +1,14 @@
+
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * This class contains some basic funtions of shopping system
- */
 public class DummyModel implements Model {
-	// product name must not the same!!!
-	ArrayList<Product> productList = new ArrayList<Product>();
+	ArrayList<Product> productList = new ArrayList<>();
 	HashMap<String, String> passwords = new HashMap<>();
 	HashMap<String, Customer> customerList = new HashMap<>();
 	HashMap<String, Admin> adminList = new HashMap<>();
@@ -22,22 +20,13 @@ public class DummyModel implements Model {
 	}
 
 	private void loadData() {
-		// load product data
 		loadProductData();
-		// load customer data
 		loadCusteomerData();
-		// load admin data
 		loadAdminData();
-		// load orer data
 		orderList = loadOrderList();
 	}
 
-	/***
-	 * Load admin data
-	 */
 	private void loadAdminData() {
-		// Admin detail text
-		// id,name,username,password,securityQuestion,securityAnswer,DOB
 		String adminData = FileHandler.readFromFile(FileHandler.ADMIN_DATA);
 		String[] adminArray = adminData.split(FileHandler.SPLIT_CEMI);
 		for (int i = 0; i < adminArray.length; i++) {
@@ -47,108 +36,82 @@ public class DummyModel implements Model {
 			String name = customers[1];
 			String username = customers[2];
 			String password = customers[3];
-			String securityQuestion = customers[4];
-			String securityAnswer = customers[5];
-			String dob = customers[6];
-			// String phone = customers[7];
-			// String address = customers[8];
-			// String cardNumber = customers[9];
-			Admin c = new Admin(id, name, username, password, dob);
-			c.setSecrQues(securityQuestion);
-			c.setAnswer(securityAnswer);
-			// c.setPhone(phone);
-			// c.setAddress(address);
-			// c.setCardNumber(cardNumber);
+			Admin c = new Admin(id, name, username, password);
 			adminList.put(username, c);
 			passwords.put(username, password);
 		}
 	}
 
-	private void loadGameData() {
-		String gameData = FileHandler.readFromFile(FileHandler.GAME_FILE);
-		String[] gameArray = gameData.split(FileHandler.SPLIT_CEMI);
-		for (int i = 0; i < gameArray.length; i++) {
-			String[] game = gameArray[i].split(FileHandler.SPLIT_COMMA);
+	private void loadElectronicsData() {
+		String electronicsData = FileHandler.readFromFile(FileHandler.ELECTRONICS_FILE);
+		String[] electronicsArray = electronicsData.split(FileHandler.SPLIT_CEMI);
+		for (int i = 0; i < electronicsArray.length; i++) {
+			String[] game = electronicsArray[i].split(FileHandler.SPLIT_COMMA);
 			String name = game[0];
-			int issueYear = Integer.parseInt(game[1]);
-			String platform = game[2];
-			String price = game[3];
-			String publisher = game[4];
-			String quantity = game[5];
-			Game c = new Game(ProductType.GAME, name, issueYear, platform,
-					Float.parseFloat(price), publisher,
+			String price = game[1];
+			String quantity = game[2];
+            String description = game[3];
+			Electronics c = new Electronics(ProductType.ELECTRONICS, name,
+					Float.parseFloat(price), description,
 					Integer.parseInt(quantity));
 			productList.add(c);
 		}
 	}
 
-	/***
-	 * Load movie data from file File format:
-	 * name,year,genre,price,director,quantity,numberOfFilms
-	 */
-	private void loadMovieData() {
-		String movieData = FileHandler.readFromFile(FileHandler.MOVIE_FILE);
-		String[] movieArray = movieData.split(FileHandler.SPLIT_CEMI);
-		for (int i = 0; i < movieArray.length; i++) {
-			String[] movie = movieArray[i].split(FileHandler.SPLIT_COMMA);
-			String name = movie[0];
-			int year = Integer.parseInt(movie[1]);
-			String genre = movie[2];
-			float price = Float.parseFloat(movie[3]);
-			String director = movie[4];
-			int quantity = Integer.parseInt(movie[5]);
-			int numberOfFilms = Integer.parseInt(movie[6]);
-			Movie c = new Movie(ProductType.MOVIE, name, price, year, genre,
-					director, quantity, numberOfFilms);
+	private void loadFashionData() {
+		String fashionData = FileHandler.readFromFile(FileHandler.FASHION_FILE);
+		String[] fashionArray = fashionData.split(FileHandler.SPLIT_CEMI);
+		for (int i = 0; i < fashionArray.length; i++) {
+			String[] fashion = fashionArray[i].split(FileHandler.SPLIT_COMMA);
+			String name = fashion[0];
+			float price = Float.parseFloat(fashion[1]);
+			int quantity = Integer.parseInt(fashion[2]);
+			String description = fashion[3];
+			Fashion c = new Fashion(ProductType.FASHION, name, price, description, quantity);
 			productList.add(c);
 		}
 	}
 
-	/***
-	 * load TV data
-	 */
-	private void loadTVData() {
-		String TVData = FileHandler.readFromFile(FileHandler.TV_FILE);
-		String[] TVArray = TVData.split(FileHandler.SPLIT_CEMI);
-		for (int i = 0; i < TVArray.length; i++) {
-			String[] tv = TVArray[i].split(FileHandler.SPLIT_COMMA);
-			String name = tv[0];
-			int year = Integer.parseInt(tv[1]);
-			String genre = tv[2];
-			float price = Float.parseFloat(tv[3]);
-			String director = tv[4];
-			int quantity = Integer.parseInt(tv[5]);
-			int episodes = Integer.parseInt(tv[6]);
-			String star = tv[7];
-			// ProductType type, String name, float price, int year, String
-			// genre, String director, int quantity, int episodes, String star
-			TV tvObj = new TV(ProductType.TV, name, price, year, genre,
-					director, quantity, episodes, star);
+	private void loadHomeandfurnitureData() {
+		String homeandfurnitureData = FileHandler.readFromFile(FileHandler.HOMEANDFURNITURE_FILE);
+		String[] homeandfurnitureArray = homeandfurnitureData.split(FileHandler.SPLIT_CEMI);
+		for (int i = 0; i < homeandfurnitureArray.length; i++) {
+			String[] homeandfurniture = homeandfurnitureArray[i].split(FileHandler.SPLIT_COMMA);
+			String name = homeandfurniture[0];
+			float price = Float.parseFloat(homeandfurniture[1]);
+			int quantity = Integer.parseInt(homeandfurniture[2]);
+			String description = homeandfurniture[3];
+			Homeandfurniture tvObj = new Homeandfurniture(ProductType.HOMEANDFURNITURE, name, price, description, quantity);
 			productList.add(tvObj);
 		}
 	}
 
-	/***
-	 * load product data
-	 */
-	private void loadProductData() {
-		loadGameData();
-		loadMovieData();
-		loadTVData();
-		loadMusicData();
+    private void loadSportsandbooksData() {
+		String sportsandbooksData = FileHandler.readFromFile(FileHandler.SPORTSANDBOOKS_FILE);
+		String[] sportsandboksArray = sportsandbooksData.split(FileHandler.SPLIT_CEMI);
+		for (int i = 0; i < sportsandboksArray.length; i++) {
+			String[] sportsandbooks = sportsandboksArray[i].split(FileHandler.SPLIT_COMMA);
+			String name = sportsandbooks[0];
+			float price = Float.parseFloat(sportsandbooks[1]);
+			int quantity = Integer.parseInt(sportsandbooks[2]);
+			String description = sportsandbooks[3];
+			Sportsandbooks tvObj = new Sportsandbooks(ProductType.SPORTSANDBOOKS, name, price, description, quantity);
+			productList.add(tvObj);
+		}
 	}
 
-	/***
-	 * Load customer data
-	 */
+	private void loadProductData() {
+		loadElectronicsData();
+		loadFashionData();
+		loadHomeandfurnitureData();
+		loadSportsandbooksData();
+	}
+
 	private void loadCusteomerData() {
 		loadCustomerDetail();
 		loadCustomerCart();
 	}
 
-	/***
-	 * Load customer personal information
-	 */
 	private void loadCustomerDetail() {
 		String customerData = FileHandler
 				.readFromFile(FileHandler.CUSTOMER_DATA);
@@ -158,19 +121,14 @@ public class DummyModel implements Model {
 					.split(FileHandler.SPLIT_COMMA);
 			String idStr = customers[0].trim();
 			int id = Integer.parseInt(idStr.trim());
-			String name = customers[1];
+			String fullName = customers[1];
 			String username = customers[2];
 			String password = customers[3];
-			String securityQuestion = customers[4];
-			String securityAnswer = customers[5];
-			String dob = customers[6];
-			String phone = customers[7];
-			String address = customers[8];
-			String cardNumber = customers[9];
-			Customer c = new Customer(id, name, username, password, dob);
-			c.setSecrQues(securityQuestion);
-			c.setAnswer(securityAnswer);
-			c.setPhone(phone);
+			String phoneNumber = customers[4];
+			String address = customers[5];
+			String cardNumber = customers[6];
+			Customer c = new Customer(id, fullName, username, password);
+			c.setPhoneNumber(phoneNumber);
 			c.setAddress(address);
 			c.setCardNumber(cardNumber);
 			customerList.put(username, c);
@@ -178,31 +136,6 @@ public class DummyModel implements Model {
 		}
 	}
 
-	/***
-	 * load Music data
-	 */
-	private void loadMusicData() {
-		String musicData = FileHandler.readFromFile(FileHandler.MUSIC_FILE);
-		String[] musicArray = musicData.split(FileHandler.SPLIT_CEMI);
-		for (int i = 0; i < musicArray.length; i++) {
-			String[] music = musicArray[i].split(FileHandler.SPLIT_COMMA);
-			String name = music[0];
-			String singer = music[1];
-			String genre = music[2];
-			int year = Integer.parseInt(music[3]);
-			int quantity = Integer.parseInt(music[4]);
-			int numOfSongs = Integer.parseInt(music[5]);
-			float price = Float.parseFloat(music[6]);
-			// -name,singer,genre,year,quantity,numOfSongs,price
-			Music musicObj = new Music(ProductType.MUSIC, name, price, year,
-					genre, singer, quantity, numOfSongs);
-			productList.add(musicObj);
-		}
-	}
-
-	/***
-	 * Load customer cart information
-	 */
 	private void loadCustomerCart() {
 		String cartData = FileHandler.readFromFile(FileHandler.CART_FILE);
 		String[] cartArray = cartData.split(FileHandler.SPLIT_CEMI);
@@ -220,13 +153,6 @@ public class DummyModel implements Model {
 		}
 	}
 
-	/***
-	 * Return a product by its name
-	 * 
-	 * @param name
-	 *            product name
-	 * @return product
-	 */
 	private Product getProductByName(String name) {
 		for (Product p : productList) {
 			if (p.getName().equals(name)) {
@@ -249,8 +175,6 @@ public class DummyModel implements Model {
 				return true;
 			}
 		} else {
-			// /TODO
-			// add admin login validate
 			Admin loginAdmin = adminList.get(username);
 			if (loginAdmin != null && password.equals(loginAdmin.getPassword())) {
 				return true;
@@ -265,7 +189,7 @@ public class DummyModel implements Model {
 			return false;
 		}
 		passwords.put(username, password);
-		customerList.put(username, new Customer(username, "", "", ""));
+		customerList.put(username, new Customer("", username, "", "", ""));
 		return true;
 	}
 
@@ -294,36 +218,25 @@ public class DummyModel implements Model {
 
 	@Override
 	public int processOrder(String currentUserID, Cart cart) {
-		// Check if the quantity is enough
 		for (CartItem ct : cart.getList()) {
-			// if product quantity is not enough, not processing
 			int productQuantity = ct.product.getQuantity();
 			if (productQuantity < ct.quantity) {
 				return 1;
 			}
-			// Update the quantity of the product
 			int currentProductQuantity = (int) (productQuantity - ct.quantity);
 			ct.product.setQuantity(currentProductQuantity);
 		}
-		// save product
 		saveProductData();
-		// save order
 		saveOrderData(currentUserID, cart);
 		return 0;
 	}
 
-	/***
-	 * Save order data into file
-	 */
 	public void saveOrderData(String currentUserID, Cart cart) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		// order file data format
 		String dateStr = dateFormat.format(date);
-		// Order id
 		int orderid = orderList.size() + 1;
 
-		// Add order into orderList
 		Order order = new Order();
 		order.setCustomerId(currentUserID);
 		order.setOrderItem(cart.getList());
@@ -331,47 +244,41 @@ public class DummyModel implements Model {
 		order.setOrderId(orderid);
 		orderList.add(order);
 
-		// orderId,currentUserID,time,productName,productQuantity,productName,productQuantity
 		String orderData = orderid + FileHandler.SPLIT_COMMA + currentUserID
 				+ FileHandler.SPLIT_COMMA + dateStr + FileHandler.SPLIT_COMMA;
 		for (CartItem ct : cart.getList()) {
-			// different product and its quantity is separated by ","
 			orderData += ct.toString() + FileHandler.SPLIT_COMMA;
 		}
 		orderData += "\n";
 		FileHandler.appendToFile(orderData, FileHandler.ORDER_FILE);
 	}
 
-	/*
-	 * Save product data into file
-	 */
 	public void saveProductData() {
-		// initialize different data which needs to be stored in file
-		String gameData = "";
-		String movieData = "";
-		String TVData = "";
-		String musicData = "";
+		String electronicsData = "";
+		String fashionData = "";
+		String homeandfurnitureData = "";
+		String sportsandbooksData = "";
 		for (Product p : productList) {
 			switch (p.getType()) {
-			case GAME:
-				gameData += p.toString() + "\n";
+			case ELECTRONICS:
+				electronicsData += p.toString() + "\n";
 				break;
-			case MUSIC:
-				musicData += p.toString() + "\n";
+			case SPORTSANDBOOKS:
+				sportsandbooksData += p.toString() + "\n";
 				break;
-			case MOVIE:
-				movieData += p.toString() + "\n";
+			case FASHION:
+				fashionData += p.toString() + "\n";
 				break;
-			case TV:
-				TVData += p.toString() + "\n";
+			case HOMEANDFURNITURE:
+			    homeandfurnitureData += p.toString() + "\n";
 			default:
 				break;
 			}
 		}
-		FileHandler.writeToFile(gameData, FileHandler.GAME_FILE);
-		FileHandler.writeToFile(movieData, FileHandler.MOVIE_FILE);
-		FileHandler.writeToFile(TVData, FileHandler.TV_FILE);
-		FileHandler.writeToFile(musicData, FileHandler.MUSIC_FILE);
+		FileHandler.writeToFile(homeandfurnitureData, FileHandler.ELECTRONICS_FILE);
+		FileHandler.writeToFile(fashionData, FileHandler.FASHION_FILE);
+		FileHandler.writeToFile(homeandfurnitureData, FileHandler.HOMEANDFURNITURE_FILE);
+		FileHandler.writeToFile(sportsandbooksData, FileHandler.SPORTSANDBOOKS_FILE);
 	}
 
 	@Override
@@ -418,27 +325,21 @@ public class DummyModel implements Model {
 		List<AdminReport> reports = new ArrayList<AdminReport>();
 		AdminReport ar = null;
 		for (Order order : loadOrderList()) {
-			// Find the periods
 			String orderedDate = order.getOrderedDate();
 			List<CartItem> cartItems = order.getOrderItem();
 			for (CartItem ct : cartItems) {
-				// / d{4}/d{2}/d{2}
 				if (ct.product.getName().equals(productName)) {
 					boolean isAdd = false;
-					// no date input
 					if (Utility.isEmpty(start) && Utility.isEmpty(end)) {
 						isAdd = true;
-						// end date is empty
 					} else if (Utility.isEmpty(start) && !Utility.isEmpty(end)) {
 						if(orderedDate.compareTo(end) <= 0){
 							isAdd = true;
 						}
-						// start date is empty
 					}else if (Utility.isEmpty(end) && !Utility.isEmpty(start)){
 						if(orderedDate.compareTo(start) >= 0){
 							isAdd = true;
 						}
-						// date is not empty
 					}else if(orderedDate.compareTo(start) >= 0
 							&& orderedDate.compareTo(end) <= 0){
 						isAdd = true;
@@ -447,7 +348,7 @@ public class DummyModel implements Model {
 						ar = new AdminReport();
 						String customerId = order.getCustomerId();
 						ar.setCustomerId(customerId);
-						ar.setCustomerName(getUserInfo(customerId).getName());
+						ar.setCustomerName(getUserInfo(customerId).getFullName());
 						ar.setOrderId(order.getOrderId() + "");
 						ar.setOrderedDate(orderedDate);
 						ar.setItemName(ct.product.getName());

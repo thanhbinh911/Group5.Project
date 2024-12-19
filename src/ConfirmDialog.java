@@ -1,5 +1,4 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -12,9 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-/**
- * This class is the view used for customer checking out and confirm the order.
- */
 public class ConfirmDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;

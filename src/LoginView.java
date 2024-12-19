@@ -1,5 +1,4 @@
 
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,15 +17,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-/**
- * This class is worked when user opened the system and ask for log in/sign up
- */
 public class LoginView extends View {
-
 	private static final long serialVersionUID = 1L;
-	
-	///////
-	private JRadioButton customer;
+
+    private JRadioButton customer;
 	private JRadioButton admin;
 	private JPanel panel_identity;
 	
@@ -44,7 +38,7 @@ public class LoginView extends View {
 	private JLabel lblNewLabel;
 	private Component verticalStrut;
 
-	public LoginView() {
+    public LoginView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -65,7 +59,6 @@ public class LoginView extends View {
 		panel_5.add(panel_6);
 		
 		lblNewLabel = new JLabel();
-		//lblNewLabel.setIcon(ShopController.LOGO_ICON);
 		panel_6.add(lblNewLabel);
 		
 		panel_4 = new JPanel();
@@ -74,11 +67,10 @@ public class LoginView extends View {
 		
 		verticalStrut = Box.createVerticalStrut(20);
 		panel_4.add(verticalStrut);
-		
-		///////
-		panel_identity = new JPanel();
-		customer = new JRadioButton("customer");
-		admin=new JRadioButton("admin");  
+
+        panel_identity = new JPanel();
+		customer = new JRadioButton("Customer");
+		admin=new JRadioButton("Admin");  
 		ButtonGroup bg=new ButtonGroup();  
 		bg.add(customer);
 		bg.add(admin);
@@ -94,12 +86,8 @@ public class LoginView extends View {
 		flowLayout.setVgap(0);
 		flowLayout.setHgap(0);
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
-		
-//		panel_4.add(customer);
-//		panel_4.add(admin);
-		
-		lblUserId = new JLabel("User ID");
+
+        lblUserId = new JLabel("User ID");
 		panel_1.add(lblUserId);
 		
 		username = new JTextField();
@@ -122,16 +110,16 @@ public class LoginView extends View {
 		
 		panel_2 = new JPanel();
 		panel_4.add(panel_2);
-		
-		newAccButton = new JButton("Create an account");
+
+        newAccButton = new JButton("Create an account");
 		panel_2.add(newAccButton);
 		newAccButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				getController().setView(new SignupView());
 			}
 		});
-		
-		loginButton = new JButton("Login");
+
+        loginButton = new JButton("Login");
 		panel_2.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

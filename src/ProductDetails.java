@@ -1,7 +1,4 @@
 
-
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -19,10 +16,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-/**
- *This is the view showed when customer clicked "View" in the product list, and shows more detailed
- *infromation.
- */
 public class ProductDetails extends JDialog {
 
 	private static final long serialVersionUID = 1L;

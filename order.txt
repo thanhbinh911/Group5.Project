@@ -12,3 +12,4 @@
 12,ria11,2016/10/02 15:21:15,Call of Duty,1,NBA 2K17,1,World of Warcraft,1,
 13,st291,2016/10/02 15:31:29,Call of Duty,1,Twenty dollars,1,
 14,jn319,2024/12/11 21:29:35,Counter-strike,1,
+15,jn319,2024/12/15 00:09:05,Counter-strike,2,

@@ -1,6 +1,4 @@
 
-
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,16 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-/**
- * This class is the main view for customer shopping.
- */
 public class ProductListView extends View {
-	
 	private static final long serialVersionUID = 1L;
-	
 	private JPanel scrollPanel;
-	
-	public ProductListView() {
+
+    public ProductListView() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -33,39 +26,38 @@ public class ProductListView extends View {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		add(panel, BorderLayout.NORTH);
 	
-		//Product Categorize GUI(by Richard)
 		JLabel comboBoxLabel = new JLabel();
 		comboBoxLabel.setText("Please Choose Product Category:");
 		panel.add(comboBoxLabel);
 		
 		final JComboBox<String> productBox = new JComboBox<String>();
 		productBox.addItem("All Products");
-		productBox.addItem("Music");
-		productBox.addItem("Movie");
-		productBox.addItem("Game");
-		productBox.addItem("TV");
+		productBox.addItem("Sports and Books");
+		productBox.addItem("Fashion");
+		productBox.addItem("Electronics");
+		productBox.addItem("Home and Furniture");
 		panel.add(productBox);
-		
-		productBox.addActionListener(new ActionListener(){
+
+        productBox.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String s = (String) productBox.getSelectedItem();
 				
 				switch (s){
-				case "Music":
-					initializeByProduct("Music");break;
-				case "Movie":
-					initializeByProduct("Movie");break;
-				case "Game":
-					initializeByProduct("Game");break;
-				case "TV":
-					initializeByProduct("TV");break;
+				case "Sports and Books":
+					initializeByProduct("Sports and Books");break;
+				case "Fashion":
+					initializeByProduct("Fashion");break;
+				case "Electronics":
+					initializeByProduct("Electronics");break;
+				case "Home and Furniture":
+					initializeByProduct("Home and Furniture");break;
 				default:
 					initialize();break;
 				}
 			}
 		});
-		
-		JButton myInfoButton = new JButton("My account");
+
+        JButton myInfoButton = new JButton("My account");
 		panel.add(myInfoButton);
 		
 		myInfoButton.addActionListener(new ActionListener(){
@@ -73,8 +65,8 @@ public class ProductListView extends View {
 				UserDetails.display(getController());
 			}
 		});
-		
-		JButton cartButton = new JButton("View cart");
+
+        JButton cartButton = new JButton("View cart");
 		
 		cartButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -83,9 +75,8 @@ public class ProductListView extends View {
 		});
 		
 		panel.add(cartButton);
-		
-		//////////// log out
-		JButton logoutBtn = new JButton("Logout");
+
+        JButton logoutBtn = new JButton("Logout");
 		logoutBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog (null, "Do you want to logout?","Confirm", 2);
@@ -99,19 +90,17 @@ public class ProductListView extends View {
 			}
 		});
 		panel.add(logoutBtn);
-		////////////////////
-		
-		scrollPanel = new JPanel();
+
+        scrollPanel = new JPanel();
 		JScrollPane scroll = new JScrollPane(scrollPanel);
 		scrollPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		add(scroll, BorderLayout.CENTER);
-
 	}
 
-	public void initialize() {
+    public void initialize() {
 		scrollPanel.removeAll();
 		List<Product> list = getController().getBackend().getProducts();
 		for(Product p : list){
@@ -119,9 +108,8 @@ public class ProductListView extends View {
 		}
 		revalidate();
 	}
-	
-	// display product by catogorization
-	public void initializeByProduct(String productType) {
+
+    public void initializeByProduct(String productType) {
 		scrollPanel.removeAll();
 		List<Product> list = getController().getBackend().getProducts();
 		for(Product p : list){
@@ -130,4 +118,5 @@ public class ProductListView extends View {
 		}
 		revalidate();
 	}
+
 }

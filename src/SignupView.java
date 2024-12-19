@@ -1,5 +1,4 @@
 
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -7,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,10 +15,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class SignupView extends View {
-
 	private static final long serialVersionUID = 1L;
-	
-	private JTextField userID, pwd;
+
+    private JTextField userID, pwd;
 	private JButton newAccButton;
 	private JPanel panel_2;
 	private JPanel panel_1;
@@ -37,7 +34,7 @@ public class SignupView extends View {
 	private JTextField pwdConfirm;
 	private JButton btnNewButton;
 
-	public SignupView() {
+    public SignupView() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -59,7 +56,6 @@ public class SignupView extends View {
 		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.X_AXIS));
 		
 		lblNewLabel = new JLabel();
-		//lblNewLabel.setIcon(ShopController.LOGO_ICON);
 		panel_6.add(lblNewLabel);
 		
 		panel_4 = new JPanel();
@@ -102,7 +98,7 @@ public class SignupView extends View {
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panel_4.add(panel_7);
 		
-		lblConfirmPassword = new JLabel("Conform your password");
+		lblConfirmPassword = new JLabel("Confirm your password");
 		lblConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_7.add(lblConfirmPassword);
 		

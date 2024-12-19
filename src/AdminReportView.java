@@ -1,3 +1,4 @@
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,25 +20,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-/**
- * <pre>
- * This class represents the view for admin to generate report
- */
 public class AdminReportView extends View {
 
 	private static final long serialVersionUID = 1L;
 	
-	////// Report 
 	private JPanel scrollPanel;
 	public static JTable reprot;
 	private static final String[] TABLE_COLUMNS = { "CustomerID", "Name", "OrderID", "Ordered date","Item name","Quantitiy of item" };
 
-	public static final String TYPE_MUSIC = "Music";
-	public static final String TYPE_MOVIE = "Movie";
-	public static final String TYPE_TV = "TV";
-	public static final String TYPE_GAME = "Game";
-	public static final String[] TYPE = { TYPE_GAME, TYPE_MUSIC, TYPE_MOVIE,
-			TYPE_TV };
+	public static final String TYPE_SPORTSANDBOOKS = "Sports and Books";
+	public static final String TYPE_FASHION = "Fashion";
+	public static final String TYPE_HOMEANDFURNITURE = "Home and Furniture";
+	public static final String TYPE_ELECTRONICS = "Electronics";
+	public static final String[] TYPE = { TYPE_ELECTRONICS, TYPE_SPORTSANDBOOKS, TYPE_FASHION,
+			TYPE_HOMEANDFURNITURE };
 
 	private JButton backToProductList;
 	private JLabel productLabel;
@@ -55,10 +51,7 @@ public class AdminReportView extends View {
 	private JComboBox<Customer> customerComboBox;
 
 	public AdminReportView() {
-		// create container
-		// Container container = this.getContentPane();
-		// setTitle("Generate Report");
-		// setBounds(100, 100, 500, 500);
+	
 		setLayout(new BorderLayout());
 
 		JPanel inputPanel = new JPanel();
@@ -98,12 +91,9 @@ public class AdminReportView extends View {
 		
 		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
 
-		// //////////////////
-		// create table
 		this.reprot = new JTable(new DefaultTableModel(TABLE_COLUMNS, 0));
 		this.reprot.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-		// set different columns width
 		TableColumnModel propertyTableColumnModel = this.reprot
 				.getColumnModel();
 		propertyTableColumnModel.getColumn(0).setPreferredWidth(100);
@@ -113,7 +103,6 @@ public class AdminReportView extends View {
 		propertyTableColumnModel.getColumn(4).setPreferredWidth(240);
 		propertyTableColumnModel.getColumn(5).setPreferredWidth(100);
 
-		// / Add product table
 		scrollPanel = new JPanel();
 		JScrollPane scroll = new JScrollPane(reprot);
 		scrollPanel.setLayout(new GridLayout(0, 6, 0, 0));
