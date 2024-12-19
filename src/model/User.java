@@ -1,16 +1,32 @@
 package model;
 
 public class User {
-    private String username;
-    private String password;
-    private String role; // Role: "Manager" or "Customer"
-
-    public User(String username, String password, String role) {
+	
+    public User() {
+    	super();
+    }
+    
+    public User(int id, String username, String password, String role) {
+    	super();
+    	this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
     }
-
+ 
+    public User(int id, String username, String password) {
+    	super();
+    	this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = "Customer";
+    }
+    
+	private int id;
+    private String username;
+    private String password;
+    private String role; // Role: "Manager" or "Customer"
+    
     // Getters and setters
     public String getUsername() {
         return username;
@@ -40,4 +56,13 @@ public class User {
     public boolean authenticate(String password) {
         return this.password.equals(password);
     }
+    public void setId(int id) {
+    	this.id = id;
+    }
+	public int getId() {
+		return id;
+	}
+	public String toString() {
+		return id+" "+username+" "+password+" "+role ;
+	}
 }

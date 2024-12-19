@@ -1,57 +1,64 @@
 package model;
 
 public class Product {
-    private int id;
-    private String name;
-    private double price;
-    private int quantity;
-
-    public Product(int id, String name, double price, int quantity) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-    }
-    // Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
-    }
+	public Product() {
+		super();
+	}
+	public Product(int id, String product_name, int price, String product_status, int quantity, String product_description) {
+		super();
+		this.id = id;
+		this.product_name = product_name;
+		this.price = price;
+		this.product_status = product_status;
+		this.quantity = quantity;
+		this.product_description = product_description;
+	}
+	private int id;
+	private String product_name;
+	private int price;
+	private String product_status;
+	private int quantity;
+	private String product_description;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getProduct_status() {
+		return product_status;
+	}
+	public void setProduct_status(String product_status) {
+		this.product_status = product_status;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public String getProduct_description() {
+		return product_description;
+	}
+	public void setProduct_description(String product_description) {
+		this.product_description = product_description;
+	}
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", product_name=" + product_name + ", price=" + price + ", product_status="
+				+ product_status + ", quantity=" + quantity + ", product_description=" + product_description + "]";
+	}
+	
 }
