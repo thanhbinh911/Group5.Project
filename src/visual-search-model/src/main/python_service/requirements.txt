@@ -1,0 +1,12 @@
+grpcio
+grpcio-tools
+protobuf
+pandas
+tqdm
+torch
+torchvision
+Pillow
+numpy
+scikit-learn
+sentence-transformers
+requests

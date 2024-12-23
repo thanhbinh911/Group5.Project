@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package visual_search;
+
+service VisualSearchService {
+  rpc Search (VisualSearchRequest) returns (VisualSearchResponse);
+}
+
+message VisualSearchRequest {
+  string image_url = 1;
+  string text = 2;
+}
+
+message VisualSearchResponse {
+  repeated string similar_image_urls = 1;
+  repeated int32 similar_text_ids = 2;
+}
